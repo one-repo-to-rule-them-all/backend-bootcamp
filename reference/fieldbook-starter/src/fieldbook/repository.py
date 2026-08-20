@@ -50,6 +50,9 @@ class InMemoryRecordRepository:
     def list(self, owner_id: str) -> list[Record]:
         return [r for r in self._records.values() if r.owner_id == owner_id]
 
+    def count(self, owner_id: str) -> int:
+        return sum(1 for r in self._records.values() if r.owner_id == owner_id)
+
     def update(
         self,
         record_id: str,
