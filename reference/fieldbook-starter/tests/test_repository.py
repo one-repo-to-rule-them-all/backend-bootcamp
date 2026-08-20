@@ -50,6 +50,14 @@ def test_list_is_scoped_to_owner(repo: InMemoryRecordRepository) -> None:
     assert len(mine) == 2
     assert all(r.owner_id == "user-1" for r in mine)
 
+def test_count_is_scoped_to_owner(repo: InMemoryRecordRepository) -> None:
+    repo.create(title="mine", owner_id="user-1")
+    repo.create(title="also mine", owner_id="user-1")
+    repo.create(title="theirs", owner_id="user-2")
+
+    count = repo.count(owner_id="user-1")
+
+    assert count == 2
 
 def test_update_changes_fields(repo: InMemoryRecordRepository) -> None:
     created = repo.create(title="draft", owner_id="user-1")
